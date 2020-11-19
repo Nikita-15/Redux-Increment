@@ -1,47 +1,49 @@
 import React, { Component } from "react";
+
+//its a function that returns higer order compoent
 import { connect } from "react-redux";
 
 class App extends Component {
-  // state = {
-  //   age: 21
-  // };
-  // onAgeUp = () => {
-  //   this.setState({
-  //     ...this.state,
-  //     age: ++this.state.age
-  //   });
-  // };
-  // onAgeDown = () => {
-  //   this.setState({
-  //     ...this.state,
-  //     age: --this.state.age
-  //   });
-  // };
   render() {
     return (
       <div className="App">
-        <div>
-          Age : <span>{this.props.age}</span>
+        <div className="col">
+          <div>
+            <span>A:</span>
+            <span>{this.props.a}</span>
+          </div>
+          <button onClick={() => this.props.updateA(this.props.b)}>
+            Update A
+          </button>
         </div>
-        <button onClick={this.props.onAgeUp}>Age UP</button>
-        <button onClick={this.props.onAgeDown}>Age DOWN</button>
+        <div className="col">
+          <div>
+            <span>B:</span>
+            <span>{this.props.b}</span>
+          </div>
+          <button onClick={() => this.props.updateB(this.props.a)}>
+            Update B
+          </button>
+        </div>
       </div>
     );
   }
 }
-const mapStateToProps = state => {
+const mapDispachToProps = dispach => {
   return {
-    age: state.age
+    updateA: b => dispach({ type: "UPDATE_A", b: b }),
+    updateB: a => dispach({ type: "UPDATE_B", a: a })
   };
 };
-const mapDispatchToProps = dispach => {
+
+const mapStateToProps = state => {
   return {
-    onAgeUp: () => dispach({ type: "AGE_UP" }),
-    onAgeDown: () => dispach({ type: "AGE_DOWN" })
+    a: state.rA.a,
+    b: state.rB.b
   };
 };
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispachToProps
 )(App);
